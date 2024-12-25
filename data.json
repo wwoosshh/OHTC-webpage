@@ -184,4 +184,22 @@
     "title": "연락처",
     "content": "대회 관련 문의는 다음 이메일로 보내주세요: <a href='mailto:contact@example.com'>contact@example.com</a>."
   }
+};
+
+// 섹션 콘텐츠 로드
+function loadContent(section) {
+  const sectionData = data[section];
+  const contentDiv = document.getElementById('content');
+  if (sectionData) {
+    const title = `<h2>${sectionData.title}</h2>`;
+    const body = Array.isArray(sectionData.content)
+      ? sectionData.content.join("")
+      : sectionData.content;
+    contentDiv.innerHTML = title + body;
+  } else {
+    console.error('선택한 섹션의 데이터가 없습니다.');
+  }
 }
+
+// 기본적으로 홈 콘텐츠 로드
+loadContent('home');
