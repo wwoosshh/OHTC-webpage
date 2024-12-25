@@ -1,3 +1,4 @@
+// 데이터 객체 (content 필드를 배열로 통일)
 const data = {
   "home": {
     "title": "홈",
@@ -192,12 +193,21 @@ function loadContent(section) {
   const contentDiv = document.getElementById('content');
   if (sectionData) {
     const title = `<h2>${sectionData.title}</h2>`;
-    const body = Array.isArray(sectionData.content)
-      ? sectionData.content.join("")
-      : sectionData.content;
+    let body = '';
+    
+    // content가 배열인 경우, 각 항목을 HTML로 추가
+    if (Array.isArray(sectionData.content)) {
+      sectionData.content.forEach(item => {
+        body += item; // HTML 내용 추가
+      });
+    } else {
+      body = sectionData.content; // content가 문자열인 경우 그대로 사용
+    }
+    
     contentDiv.innerHTML = title + body;
   } else {
     console.error('선택한 섹션의 데이터가 없습니다.');
+    contentDiv.innerHTML = '<h2>섹션을 찾을 수 없습니다.</h2>'; // 오류 발생시 기본 메시지
   }
 }
 
