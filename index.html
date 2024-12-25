@@ -3,88 +3,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OHTC - Osu! Half Time Cup</title>
+  <title>Osu! HalfTime Cup</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
-    <h1>OHTC</h1>
-    <p>Osu! Half Time Cup</p>
+    <nav>
+      <ul>
+        <li><a href="#" onclick="loadContent('home')">홈</a></li>
+        <li><a href="#" onclick="loadContent('intro')">인트로</a></li>
+        <li><a href="#" onclick="loadContent('rules')">게임룰</a></li>
+        <li><a href="#" onclick="loadContent('broadcast')">방송</a></li>
+        <li><a href="#" onclick="loadContent('results')">게임 결과</a></li>
+        <li><a href="#" onclick="loadContent('maps')">게임 맵</a></li>
+        <li><a href="#" onclick="loadContent('participants')">참가자</a></li>
+        <li><a href="#" onclick="loadContent('faq')">FAQ</a></li>
+        <li><a href="#" onclick="loadContent('contact')">연락처</a></li>
+      </ul>
+    </nav>
   </header>
 
-  <nav>
-    <a href="javascript:void(0);" onclick="loadContent('home')">홈</a>
-    <a href="javascript:void(0);" onclick="loadContent('intro')">인트로</a>
-    <a href="javascript:void(0);" onclick="loadContent('rules')">게임룰</a>
-    <a href="javascript:void(0);" onclick="loadContent('broadcast')">방송 바로가기</a>
-    <a href="javascript:void(0);" onclick="loadContent('results')">게임 결과</a>
-    <a href="javascript:void(0);" onclick="loadContent('maps')">맵풀</a>
-    <a href="javascript:void(0);" onclick="loadContent('participants')">참가자 목록</a>
-    <a href="javascript:void(0);" onclick="loadContent('faq')">의견</a>
-    <a href="javascript:void(0);" onclick="loadContent('contact')">연락처</a>
-  </nav>
-
-  <div id="content" class="content">
-    <h2>환영합니다!</h2>
-    <p>OHTC에 오신 것을 환영합니다! 이 페이지는 osu! Half Time Cup 대회에 관한 모든 정보를 제공합니다.</p>
-  </div>
-
-  <p class="center-text">다음 일정 : 참가자 모집</p>
-  <h9 class="center-text">2025년 3월 17일까지 남은 시간</h9>
-
-  <div class="countdown-wrapper">
-    <div class="countdown-container">
-      <div class="countdown" id="countdown"></div>
+  <main>
+    <div id="content">
+      <!-- 여기에 각 섹션의 내용이 동적으로 로드됩니다. -->
     </div>
-  </div>
+  </main>
 
   <footer>
-    <p>&copy; 2024 OHTC. All Rights Reserved.</p>
+    <p>© 2024 OHTC | 모든 권리 보유</p>
   </footer>
 
   <script>
-    // 목표 날짜 설정 (2025년 3월 17일)
-    const targetDate = new Date(2025, 2, 17);
-
-    function updateCountdown() {
-      const now = new Date(); // 현재 시간
-      const timeRemaining = targetDate - now; // 목표 시간과 현재 시간의 차이 (밀리초 단위)
-      
-      if (timeRemaining <= 0) {
-        document.getElementById('countdown').textContent = "목표 날짜가 도달했습니다!";
-        clearInterval(interval);
-        return;
-      }
-
-      // 시간, 분, 초 계산
-      const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-      
-      // 남은 시간을 출력
-      document.getElementById('countdown').textContent = `${days}일 ${hours}시간 ${minutes}분 ${seconds}초`;
-    }
-
-    // 1초마다 실시간 업데이트
-    const interval = setInterval(updateCountdown, 1000);
-
-    // 처음 실행 시에도 한 번 호출하여 초기 값 설정
-    updateCountdown();
-
-    // 섹션 콘텐츠 로딩
+    // 데이터 로드 함수
     function loadContent(section) {
-      const sectionData = data[section];
       const contentDiv = document.getElementById('content');
-      if (sectionData) {
-        const title = `<h2>${sectionData.title}</h2>`;
-        const body = Array.isArray(sectionData.content)
-          ? sectionData.content.join("")
-          : sectionData.content;
-        contentDiv.innerHTML = title + body;
-      } else {
-        console.error('선택한 섹션의 데이터가 없습니다.');
-      }
+      
+      // GitHub raw URL로 JSON 파일을 불러오는 부분
+      const jsonUrl = 'https://raw.githubusercontent.com/{your-username}/{your-repository}/{branch}/data.json';
+      
+      fetch(jsonUrl)
+        .then(response => response.json())
+        .then(data => {
+          const sectionData = data[section];
+          if (sectionData) {
+            const title = `<h2>${sectionData.title}</h2>`;
+            const body = Array.isArray(sectionData.content)
+              ? sectionData.content.join("")
+              : sectionData.content;
+            contentDiv.innerHTML = title + body;
+          } else {
+            console.error('선택한 섹션의 데이터가 없습니다.');
+          }
+        })
+        .catch(error => {
+          console.error('JSON 파일을 불러오는 데 실패했습니다.', error);
+        });
     }
 
     // 기본적으로 홈 콘텐츠 로드
