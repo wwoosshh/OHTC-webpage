@@ -184,7 +184,7 @@
     "title": "연락처",
     "content": "대회 관련 문의는 다음 이메일로 보내주세요: <a href='mailto:contact@example.com'>contact@example.com</a>."
   }
-};
+}
 
 // 섹션 콘텐츠 로드
 function loadContent(section) {
