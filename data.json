@@ -1,4 +1,4 @@
-// 데이터 객체 (content 필드를 배열로 통일)
+/*데이터 객체 (content 필드를 배열로 통일)*/
 const data = {
   "home": {
     "title": "홈",
@@ -187,7 +187,7 @@ const data = {
   }
 };
 
-// 섹션 콘텐츠 로드
+/* 섹션 콘텐츠 로드 */
 function loadContent(section) {
   const sectionData = data[section];
   const contentDiv = document.getElementById('content');
