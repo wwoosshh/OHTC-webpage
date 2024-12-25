@@ -1,0 +1,122 @@
+/* 기본적인 스타일링 */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f8ff;
+}
+
+header {
+  background-color: #2c2c2c;
+  color: #f0f8ff;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 3px solid white;
+}
+
+nav {
+  background-color: #3b3b3b;
+  border-bottom: 2px solid white;
+  overflow: hidden;
+}
+
+nav a {
+  float: left;
+  display: block;
+  color: #f0f8ff;
+  padding: 14px 20px;
+  text-align: center;
+  text-decoration: none;
+}
+
+nav a:hover {
+  background-color: #f0f8ff;
+  color: #2c2c2c;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: white;
+  margin: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+  background-color: #2c2c2c;
+  color: #f0f8ff;
+  text-align: center;
+  padding: 10px;
+  border-top: 3px solid white;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
+/* countdown 스타일 */
+.center-text {
+  text-align: center; /* 수평 가운데 정렬 */
+}
+
+h9 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+
+.countdown-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.countdown-container {
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 20px 40px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: inline-block;
+}
+
+.countdown {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  letter-spacing: -1px;
+  transition: all 0.3s ease-out;
+}
+
+.countdown span {
+  font-size: 1.2rem;
+  color: #777;
+  margin-left: 5px;
+}
+
+/* 타이머의 부드러운 변환 */
+@keyframes smoothCountdown {
+  0% {
+    transform: scale(0.98);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.countdown {
+  animation: smoothCountdown 0.3s ease-out;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 600px) {
+  h9 {
+    font-size: 1.2rem;
+  }
+
+  .countdown {
+    font-size: 2rem;
+  }
+}
