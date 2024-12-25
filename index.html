@@ -4,84 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OHTC - Osu! Half Time Cup</title>
-  <style>
-    /* 기본적인 스타일링 */
-    body { font-family: Arial, sans-serif; background-color: #f0f8ff; }
-    header { background-color: #2c2c2c; color: #f0f8ff; padding: 20px; text-align: center; border-bottom: 3px solid white; }
-    nav { background-color: #3b3b3b; border-bottom: 2px solid white; overflow: hidden; }
-    nav a { float: left; display: block; color: #f0f8ff; padding: 14px 20px; text-align: center; text-decoration: none; }
-    nav a:hover { background-color: #f0f8ff; color: #2c2c2c; }
-    .content { flex-grow: 1; padding: 20px; background-color: white; margin: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
-    footer { background-color: #2c2c2c; color: #f0f8ff; text-align: center; padding: 10px; border-top: 3px solid white; position: fixed; width: 100%; bottom: 0; }
-  </style>
-  <style>
-    .center-text {
-      text-align: center; /* 수평 가운데 정렬 */
-        }
-    
-/*h9는 다음 일정시간*/
-    h9 { 
-      font-size: 1.5rem;
-      color: #333;
-      margin-bottom: 20px;
-      font-weight: 300;
-    }
-
-  .countdown-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-
-  .countdown-container {
-    background-color: #fff;
-    border-radius: 15px;
-    padding: 20px 40px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    display: inline-block;
-  }
-
-    .countdown {
-      font-size: 2.5rem; /* 큰 글씨로 남은 시간 표시 */
-      font-weight: 600;
-      color: #333;
-      margin: 0;
-      letter-spacing: -1px;
-      transition: all 0.3s ease-out; /* 부드러운 변환 */
-    }
-
-    .countdown span {
-      font-size: 1.2rem;
-      color: #777;
-      margin-left: 5px;
-    }
-
-    /* 타이머의 부드러운 변환 */
-    @keyframes smoothCountdown {
-      0% { transform: scale(0.98); opacity: 0.7; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    /* 애니메이션 추가 */
-    .countdown {
-      animation: smoothCountdown 0.3s ease-out;
-    }
-
-    /* 작은 화면에서도 잘 보이도록 반응형 디자인 */
-    @media (max-width: 600px) {
-      h9 {
-        font-size: 1.2rem;
-      }
-
-      .countdown {
-        font-size: 2rem;
-      }
-    }
-
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
@@ -105,19 +28,23 @@
     <h2>환영합니다!</h2>
     <p>OHTC에 오신 것을 환영합니다! 이 페이지는 osu! Half Time Cup 대회에 관한 모든 정보를 제공합니다.</p>
   </div>
-    <p class="center-text">
-        다음 일정 : 참가자 모집
-    </p> 
-    <h9><p class="center-text">2025년 3월 17일까지 남은 시간</p></h9>
-<div class="countdown-wrapper">
-  <div class="countdown-container">
-    <div class="countdown" id="countdown"></div>
+
+  <p class="center-text">다음 일정 : 참가자 모집</p>
+  <h9 class="center-text">2025년 3월 17일까지 남은 시간</h9>
+
+  <div class="countdown-wrapper">
+    <div class="countdown-container">
+      <div class="countdown" id="countdown"></div>
+    </div>
   </div>
-</div>
+
+  <footer>
+    <p>&copy; 2024 OHTC. All Rights Reserved.</p>
+  </footer>
 
   <script>
     // 목표 날짜 설정 (2025년 3월 17일)
-    const targetDate = new Date(2025, 2, 17); // 2025년 3월 17일 (3월은 2번 인덱스)
+    const targetDate = new Date(2025, 2, 17);
 
     function updateCountdown() {
       const now = new Date(); // 현재 시간
@@ -144,70 +71,21 @@
 
     // 처음 실행 시에도 한 번 호출하여 초기 값 설정
     updateCountdown();
-  </script>
 
-  <footer>
-    <p>&copy; 2024 OHTC. All Rights Reserved.</p>
-  </footer>
-
-    <script>
-    //css 스크립트
-    const cssData = {
-      "styles": {
-        "section-title": {
-          "font-size": "26px",
-          "font-weight": "bold",
-          "color": "#007acc",
-          "margin-top": "20px",
-          "margin-bottom": "10px"
-        }
+    // 섹션 콘텐츠 로딩
+    function loadContent(section) {
+      const sectionData = data[section];
+      const contentDiv = document.getElementById('content');
+      if (sectionData) {
+        const title = `<h2>${sectionData.title}</h2>`;
+        const body = Array.isArray(sectionData.content)
+          ? sectionData.content.join("")
+          : sectionData.content;
+        contentDiv.innerHTML = title + body;
+      } else {
+        console.error('선택한 섹션의 데이터가 없습니다.');
       }
-    };
-
-    function applyStyles() {
-      const styleSheet = document.createElement("style");
-      let cssRules = "";
-
-      for (const [className, rules] of Object.entries(cssData.styles)) {
-        cssRules += `.${className} {`;
-        for (const [property, value] of Object.entries(rules)) {
-          cssRules += `${property}: ${value};`;
-        }
-        cssRules += "}";
-      }
-
-      styleSheet.textContent = cssRules;
-      document.head.appendChild(styleSheet);
     }
-
-    // 호출하여 스타일 적용
-    applyStyles();
-    </script>
-<div id="content">
-    <p>아래는 원래 JSON을 포함하고 있던 코드입니다. JSON 데이터는 제거되었지만 기능은 그대로 유지됩니다.</p>
-    <!-- 이 부분에서 JSON 데이터가 제거되었습니다. -->
-    <div id="json-data">
-      <!-- 원래 여기에 JSON 데이터가 포함되어 있었습니다. -->
-    </div>
-  </div>
-
-  <script>
-    // JSON 데이터를 HTML에서 가져오기
-    const data = JSON.parse(document.getElementById('data-json').textContent);
-function loadContent(section) {
-  const sectionData = data[section];
-  if (sectionData) {
-    const contentDiv = document.getElementById('content');
-    const title = `<h2>${sectionData.title}</h2>`;
-    const body = Array.isArray(sectionData.content)
-      ? sectionData.content.join("") // 배열 요소를 문자열로 합칠 때 , 없이 처리
-      : sectionData.content;
-    contentDiv.innerHTML = title + body;
-  } else {
-    console.error('선택한 섹션의 데이터가 없습니다.');
-  }
-}
-
 
     // 기본적으로 홈 콘텐츠 로드
     loadContent('home');
